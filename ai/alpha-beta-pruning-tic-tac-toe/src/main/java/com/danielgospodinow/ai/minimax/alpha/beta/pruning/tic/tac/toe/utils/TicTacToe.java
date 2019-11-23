@@ -6,6 +6,16 @@ import java.util.TreeMap;
 public class TicTacToe {
 
     public static Position getNextMoveFromAI(TicTacToeBoard board, GameMarker aiMarker) {
+        Position aiGameFinisherCandidate = board.oneMoveFinisher(aiMarker);
+        if (TicTacToeBoard.isOneMoveFromWin(aiGameFinisherCandidate)) {
+            return aiGameFinisherCandidate;
+        }
+
+        Position enemyGameFinisherCandidate = board.oneMoveFinisher(aiMarker.getOppositeMove());
+        if (TicTacToeBoard.isOneMoveFromWin(enemyGameFinisherCandidate)) {
+            return enemyGameFinisherCandidate;
+        }
+
         TreeMap<Integer, Position> possibleMoves = new TreeMap<>();
         board.getFreeSpaces().forEach(freeSpace -> {
             board.setMarker(aiMarker, freeSpace);

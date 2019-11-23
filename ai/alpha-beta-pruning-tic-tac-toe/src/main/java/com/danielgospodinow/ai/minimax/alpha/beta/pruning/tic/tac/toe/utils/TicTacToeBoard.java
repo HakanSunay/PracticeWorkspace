@@ -9,6 +9,8 @@ import static com.danielgospodinow.ai.minimax.alpha.beta.pruning.tic.tac.toe.uti
 public class TicTacToeBoard {
 
     private static final int BOARD_SIZE = 3;
+    private static final int DUMMY_ROW = 619;
+    private static final int DUMMY_COL = 619;
 
     private GameMarker[][] board;
 
@@ -154,5 +156,28 @@ public class TicTacToeBoard {
         }
 
         return freeSpaces;
+    }
+
+    public Position oneMoveFinisher(GameMarker marker) {
+        Position finisherPosition = new Position(DUMMY_ROW,DUMMY_COL);
+
+        for (Position freeSpace : this.getFreeSpaces()) {
+            setMarker(marker, freeSpace);
+
+            if ((marker == X && getState() == X_WIN) || (marker == O && getState() == O_WIN)) {
+                finisherPosition = freeSpace;
+                setMarker(NONE, freeSpace);
+
+                break;
+            }
+
+            setMarker(NONE, freeSpace);
+        }
+
+        return finisherPosition;
+    }
+
+    public static boolean isOneMoveFromWin(Position finisherPosition) {
+        return finisherPosition.getRow() != DUMMY_ROW && finisherPosition.getCol() != DUMMY_COL;
     }
 }
