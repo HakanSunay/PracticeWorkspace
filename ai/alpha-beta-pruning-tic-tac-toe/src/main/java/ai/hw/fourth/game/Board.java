@@ -10,9 +10,6 @@ public class Board {
 
     private static final int BOARD_SIZE = 3;
 
-    // tribute to Rey Mysterio
-    private static final int NOT_FINISHER = 619;
-
     private BoxMarker[][] board;
 
     public Board() {
@@ -152,28 +149,5 @@ public class Board {
         }
 
         return freeSpaces;
-    }
-
-    public Position oneMoveFinisher(BoxMarker marker) {
-        Position finisherPosition = new Position(NOT_FINISHER, NOT_FINISHER);
-
-        for (Position freeSpace : this.getEmptyBoxes()) {
-            setMarker(marker, freeSpace);
-
-            if ((marker == X && getState() == X_WON) || (marker == O && getState() == O_WON)) {
-                finisherPosition = freeSpace;
-                setMarker(EMPTY, freeSpace);
-
-                break;
-            }
-
-            setMarker(EMPTY, freeSpace);
-        }
-
-        return finisherPosition;
-    }
-
-    public static boolean isOneMoveFromWin(Position finisherPosition) {
-        return finisherPosition.getRow() != NOT_FINISHER && finisherPosition.getCol() != NOT_FINISHER;
     }
 }
